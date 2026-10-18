@@ -7,7 +7,7 @@ work/ckpt, and llm_feature_cache.json goes to work/. A read token (HF_TOKEN) is 
 import os, re, shutil, sys, tempfile, zipfile
 from huggingface_hub import snapshot_download
 
-DEFAULT_REPO = "ADD-HF-USER/ADD-REPO-NAME"      # <-- EDIT: your Hugging Face repo id (not a secret), so judges need no setup
+DEFAULT_REPO = "krhk/Hilabs-term-mapping-weights"      # <-- EDIT: your Hugging Face repo id (not a secret), so judges need no setup
 repo = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("HF_WEIGHTS_REPO") or DEFAULT_REPO
 work = sys.argv[2] if len(sys.argv) > 2 else os.environ.get("HILABS_WORK_DIR", "work")
 if not repo or "ADD-" in repo: sys.exit("HF repo id not set: edit DEFAULT_REPO in scripts/download_weights.py")
