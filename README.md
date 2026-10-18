@@ -1,5 +1,4 @@
-# VK---HiLabs-AI-Quest-Hackathon-Clinical-Track-
-Clinical Mapping Engine for ICD-10 and SNOMED.
+# HiLabs Term Mapping Engine: ICD-10-CM + SNOMED CT
 
 Maps an extracted clinical entity (plus its chunk context) to **one ICD-10-CM code and one SNOMED CT concept id**,
 predicted independently per system (neither is derived from a crosswalk of the other).
@@ -72,6 +71,16 @@ python run.py demo        # hard-case demo with top candidates and confidence
 python scripts/make_report.py --out docs/HiLabs_Documentation.pdf   # regenerate the write-up (fills numbers from outputs/ if present)
 ```
 
+## Model weights (Hugging Face)
+
+Fine-tuned weights (tuned SapBERT query encoders, MedCPT cross-encoders, cached LLM answers) are hosted on the Hugging Face Hub:
+
+**`krhk/Hilabs-term-mapping-weights`**  (visibility: `public`)
+
+No setup needed: `python run.py predict ...` downloads them into `work/ckpt` automatically when none are present (the repo id is set in `scripts/download_weights.py`; `HF_TOKEN` with a *read* token is only needed if the repo is private), or do it by hand: `python scripts/download_weights.py <hf_user>/<repo>`.
+Maintainers upload them with `python scripts/export_to_hf.py`. The base models (SapBERT, BioLORD-2023, MedCPT) are pulled from their own public HF repos at run time.
+Tokens are read from the environment only and are never committed.
+
 ## Determinism
 
 Seed 42 everywhere (split, tuner, cross-encoder, LightGBM `deterministic=True`). The only external call is the Mistral
@@ -91,7 +100,8 @@ refitted on every labelled row.
 run.py                     CLI entry point (predict | lockbox | demo)
 src/engine.py              the engine (auto-generated from the notebook, see header)
 notebooks/hilabs_final.ipynb   source of truth: research cells, summary tables, diagnostics, appendix
-scripts/restore_weights.py unpack saved checkpoints
+scripts/download_weights.py pull checkpoints from the HF Hub
+scripts/restore_weights.py unpack checkpoints from a local zip
 scripts/make_report.py     builds the documentation PDF
 docs/                      write-up PDF + demo script
 ```
