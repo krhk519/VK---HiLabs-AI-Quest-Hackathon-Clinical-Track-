@@ -34,7 +34,7 @@ Predicted codes are always checked against the supplied dictionaries (a code out
 ### 2. Install
 
 ```bash
-git clone <this-repository-url> hilabs-term-mapping
+git clone https://github.com/krhk519/VK---HiLabs-AI-Quest-Hackathon-Clinical-Track-.git hilabs-term-mapping
 cd hilabs-term-mapping
 
 python -m venv .venv && source .venv/bin/activate      # optional but recommended
